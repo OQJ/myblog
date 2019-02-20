@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container h-100">
+
+        <div class="row h-100 page-header justify-content-center align-items-center">
+                <h1>Log in</h1>
+            </div>
+            <div class="row h-100 justify-content-center align-items-center">
+                <form action="{{ url_for(request.endpoint) }}" method="POST" class="col-6">
+                        {{ form_field(form.user_name) }}
+                        {{ form_field(form.password) }}
+                        {{ form.csrf_token }}
+                        {{ form.submit }}
+                </form>
+                   
+                </div>
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html'%}
+{% block content %}
+
+
+        {{ form_field(form.name)}}
+        {{ form.csrf_token }}
+        {{ form.submit }}
+
+
+
+
+
+{% endblock%}

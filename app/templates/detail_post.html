@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="container" >
+    <h2>{{ post.title }}</h2>
+    <small>Posted on post.create_time by Oqj </small>
+    <div class="float-right"> <a href="">{{  post.tag.name }} </a></div>
+    <p>{{ post.body|safe }} </p>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+.body_main{
+    width: 80%px;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: rgb(245, 244, 243);
+}
+
+.head-1{
+    text-align: center;
+    background-color: aliceblue;
+    height: 70px;
+}
+
+.start{
+    padding: 40px 15px ;
+    /* text-align: center; */
+}
+
+body{
+    padding-top: 50px;
+}

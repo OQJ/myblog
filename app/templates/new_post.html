@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="{{ url_for('new_post')}}" method="post" >
+    <div class="form-group"> 
+        {{ form_field(form.title)}}
+    </div>
+    {{ form_field(form.body)}}
+    <div class="form-group"> 
+        {{ form_field(form.tag )}}
+    </div>
+    {{ form.csrf_token }}
+    {{ form.submit(class_="btn btn-default") }}
+
+</form>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+<script src="//cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+{{ ckeditor.config(name='body') }}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
