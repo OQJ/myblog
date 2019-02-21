@@ -6,15 +6,15 @@ from app.model import Tag, Admin
 
 
 class TagForm(FlaskForm):
-    name = StringField('名字',validators=[DataRequired()])
-    submit = SubmitField('提交')
+    name = StringField('名字',validators=[DataRequired()], render_kw={'class':'text '})
+    submit = SubmitField('提交', render_kw={'class':'btn btn-primary '})
 
     def validate_name(self,field):
         if Tag.query.filter_by(name=field.data).first():
             raise ValidationError('标签已经存在')
 
 class PostForm(FlaskForm):
-    title = StringField('标题', validators=[DataRequired()], render_kw={'class':' from-control col-md-5'})
+    title = StringField('标题', validators=[DataRequired()], render_kw={'class':' from-control col-md-5 '})
     body = CKEditorField('内容', validators=[DataRequired()])
     tag = SelectField('主题', coerce=int, default=1)
     submit = SubmitField('发布')

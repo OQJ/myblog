@@ -3,6 +3,7 @@ from flask import render_template, redirect, url_for, flash, session
 from app.model import Tag, Post, Admin
 from app.forms import TagForm, PostForm, DeleteForm, LoginForm
 from app.model import db
+from flask_login import login_user, logout_user , current_user, login_required
 
 
 @app.route('/')
@@ -28,6 +29,7 @@ def tag():
 
 
 @app.route('/del_tag/<int:id>')
+@login_required
 def del_tag(id):
     tag = Tag.query.get_or_404(id)
     db.session.delete(tag)
@@ -37,6 +39,7 @@ def del_tag(id):
 
 
 @app.route('/edit_tag/<int:id>')
+@login_required
 def edit_tag(id):
     form = TagForm()
     tag = Tag.query.get_or_404(id)
@@ -47,6 +50,7 @@ def edit_tag(id):
 
 
 @app.route('/new_post', methods=['POST', 'GET'])
+@login_required
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
@@ -63,6 +67,7 @@ def new_post():
 
 
 @app.route('/edit_post/<int:id>', methods=['POST', 'GET'])
+@login_required
 def edit_post(id):
     post = Post.query.get_or_404(id)
     form = PostForm()
@@ -89,6 +94,7 @@ def detail_post(id):
     return render_template('detail_post.html', post=post)
 
 @app.route('/delete_post', methods=['POST'])
+@login_required
 def delete_post():
     form = DeleteForm()
     id = form.id.data
@@ -101,20 +107,24 @@ def delete_post():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = Admin.query.filter_by(name=form.user_name.data).first()
         if user and user.check_password_hash(form.password.data):
-            session['user_name'] = user.name
+            login_user(user)
             flash('登陆成功', 'success')
-            return redirect(url_for('index'))
+            from app.utils import redirect_back
+            return redirect_back()
         else:
             flash('登录失败')
             return redirect(url_for('login'))
     return render_template('login.html', form=form)
 
 @app.route('/logout')
+@login_required
 def logout():
-    session.pop('user_name')
+    logout_user()
     flash('退出成功', 'success')
     return redirect(url_for('index'))
